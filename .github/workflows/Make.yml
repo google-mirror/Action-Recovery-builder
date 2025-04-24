@@ -16,22 +16,10 @@ on:
         description: 'LIBRARY_BRANCH'
         required: true
         default: 'twrp-14'
-      DEVICE_URL:
-        description: 'DEVICE_URL'
-        required: true
-        default: 'https://github.com/twrpdtgen/android_device_xiaomi_selene.git'
-      DEVICE_BRANCH:
-        description: 'DEVICE_BRANCH'
-        required: true
-        default: 'master'
-      DEVICE_PATH:
-        description: 'DEVICE_PATH'
-        required: true
-        default: 'device/xiaomi/selene'
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
-        default: 'selene'
+        default: 'test'
 
 jobs:
   build:
@@ -78,13 +66,7 @@ jobs:
         PATH=~/bin:$PATH
         cd workspace
         echo "::repo sync -j$(nproc --all)"
-        repo sync -j$(nproc --all) 1>/dev/null 2>/dev/null
-
-    - name: Clone device
-      run: |
-        PATH=~/bin:$PATH
-        cd ${{ steps.pwd.outputs.pwd }}
-        git clone ${{ github.event.inputs.DEVICE_URL }} -b ${{ github.event.inputs.DEVICE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
+        repo sync -c --no-tags --auto-gc --no-clone-bundle -j$(nproc --all) 1>/dev/null 2>/dev/null
 
     - name: Building
       run: |
