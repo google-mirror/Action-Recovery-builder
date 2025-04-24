@@ -39,8 +39,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check Out
-      uses: actions/checkout@main
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
     - name: XX
       run: |
@@ -48,7 +50,7 @@ jobs:
 
     - name: XXX
       run: |
-        docker rmi $(docker images -q)
+        echo docker rmi $(docker images -q)
 
     - name: Prepare the environment
       run: |
